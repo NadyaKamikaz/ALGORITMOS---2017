@@ -1,0 +1,21 @@
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+
+using namespace std;
+
+void main ()
+
+{
+	int n,S=0;
+	do{
+	   cout<<"Ingrese n: ";
+	   cin>>n;
+    }while(n<=0);
+
+    for(int i=1;i<=n;i=i+4)
+		 S=S+i;
+	cout<< "lA SUMA ES:  "<<S;
+	getch();
+
+}
