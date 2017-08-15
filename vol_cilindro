@@ -1,0 +1,32 @@
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+
+using namespace std;
+float volcilindro (float r,float a);// prototipo de la funcion 
+void main ()
+{ 
+
+	float radio,altura,volumen;
+	do{ 
+		cout<<"Ingrese la altura: ";
+		cin>>altura;
+	} while (1<=0);
+	do{ 
+		cout<<"Ingrese radio: ";
+		cin>>radio;
+	} while (1<=0);
+
+	volumen=volcilindro(radio,altura);// llamada de la funcion 
+	cout<<"el volumen del cilindro es: "<<volumen;
+	getch ();
+ 
+} 
+float volcilindro (float r,float a)// declarar 
+{ 
+ float V,pi;
+ pi=3.141516;
+ V=pi*r*r*a;
+ return V;
+
+} 
