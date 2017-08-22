@@ -1,0 +1,35 @@
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#include "math.h"
+
+using namespace std;
+
+float base_decimal(float numero, float base);
+void main()
+{ 
+	int numero,s;
+	float base;
+	cout<<"ingrese numero: ";
+	cin>>numero;
+	cout<<"ingrese base; ";
+	cin>>base;
+	s=base_decimal(numero,base);
+	cout<<"El numero en decimal: "<<s;
+getch();
+}
+float base_decimal(float numero, float base)
+{
+	int i,s,numero;
+	float d;
+	s=0;
+	i=0;
+	while(numero!=0)
+	{
+		d=numero%10;
+		s=s+d*pow(base,i);
+		i=i+1;
+		numero=numero/10;
+	}
+return s;
+}
