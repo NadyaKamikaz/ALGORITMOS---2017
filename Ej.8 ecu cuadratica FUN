@@ -1,3 +1,5 @@
+////Construir un procedimiento para resolver una ecuación cuadrática de la forma ax2 + bx + c = 0 considerando todos los casos es decir dos raíces reales dos raíces complejas o una raíz doble.
+
 #include "stdafx.h"
 #include <iostream>
 #include "conio.h"
