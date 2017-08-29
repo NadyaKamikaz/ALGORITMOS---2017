@@ -1,0 +1,157 @@
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#include <string>
+#define MAX 100
+
+ using namespace std;
+ float area(float a, float b);
+ void vector();
+ string invertir(string var2);
+ void cargar(int vec[],int tam);
+ void BURBUJA(int vec[],int tam);
+ void mostrar(int vec[],int tam);
+ void mezclar(int T[],int n,int x[],int m, int w[],int &z);
+
+
+ void main ()
+
+{
+	float base, altura,AreaPar;
+	float Vec[MAX];
+	int N,opcion;
+	string cadena;
+	//menu
+	do{
+		cout<<"\t---------MENU---------"<<endl;
+		cout<<"======================="<<endl;
+		cout<<"1. Calculo de Area"<<endl;
+		cout<<"2. Vector"<<endl;
+		cout<<"3. Invertir cadena"<<endl;
+		cout<<"0.salir"<<endl;
+		cout << "Elige una opcion: " ;
+        cin >> opcion;
+	 
+
+     switch (opcion)
+		 
+	 {
+	    case 1: 
+			cout<<"Ingrese la base: "<<endl;
+			cin>>base;
+			cout<<"ingrese la altura: "<<endl;
+			cin>>altura;
+			AreaPar=area(base,altura);
+			cout<< " El area del paralelogramo es : "<<AreaPar<<endl;
+            break;
+		case 2:
+			cout<<"aqui va lalalala"<<endl;
+			break;
+		case 3:
+			cout<<"ingrese cadena: "<<endl;
+			cin.ignore();
+			getline(cin,cadena);
+			cout<<"la cadena invertida es: "<<invertir(cadena)<<endl;
+			break;
+		case 0:
+			cout<<" salir"<<endl;
+			break;
+		default :
+			cout<<"Opcion invalida, ingrese otra opcion "<<endl;
+
+			getch();
+			system ("cls");
+        }
+	 }while(opcion!=0);
+	 
+ }
+
+
+ float area(float a, float b)
+ {
+	 float X;
+	 X=a*b;
+	 return X;
+ }
+string invertir(string var2)
+{
+	int lng;
+	char aux;
+	string var2inver;
+	lng=var2.length();
+	for(int i=0;i<lng/2;i++)
+	{
+	aux=var2.at(i);
+	var2[i]=var2[lng-1-i];
+	var2[lng-1-i]=aux;
+	}
+return var2 ;
+}
+
+void cargar(int vec[],int tam)
+{
+	for(int i=0 ; i<tam ; i++)
+	{
+		
+		cout<< "Ingrese el valor para vec["<< i << "]=";
+		cin>> vec[i];
+	}
+}
+
+
+void BURBUJA(int vec[],int tam)
+{
+	int aux,m;
+	for (int i=0 ; i<tam-1 ; i++)
+	{
+		for(int j=i+1 ; j<tam ; j++)
+		{
+			if(vec[i]>vec[j]) 
+			{
+				
+				vec[i]=aux;
+				vec[i]=vec[j];
+				aux=vec[j];
+			}
+		}
+	}
+}
+
+void mostrar(int vec[],int tam)
+{   
+	for(int i=0 ; i<tam ; i++)
+	{
+		cout<< "vec["<< i << "]=";
+		cout<< vec[i]<<endl;
+	}
+}
+
+void mezclar(int vec1[],int n,int vec2[],int m, int vec3[],int &z)
+{
+	int i=0,j=0,k=0;
+    while ((i<n)&&(j<m))
+		{
+			if(vec1[i]< vec2[j])
+			{
+			  vec3[k]=vec1[i];
+	          i++;
+		    }
+		    else
+			{
+				vec3[k]=vec1[j];
+	            j++;
+			}
+			k++;
+	   }
+	while (i<n)
+	{ vec3[k]=vec1[i];
+	  i++; 
+	  k++;
+	}
+	while (j<m)
+	{ vec3[k]=vec2[j];
+	  j++; 
+	  k++;
+	}
+	z=k;
+}
