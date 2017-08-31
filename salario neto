@@ -1,0 +1,47 @@
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#define IVA 0.13
+#define AFP 0.121
+#define salariominimo 2000
+
+using namespace std;
+float fsalarioneto(float salariobruto);
+
+void main ()
+{
+	float salariobruto,salarioneto,n,promedio,S=0;
+	do{
+		cout<<"Ingrese numero de empleados: "<<endl;
+		cin>>n;
+	  }while (n<=0);
+
+	for(int i=1;i<=n;i++)
+	{
+		do{
+			cout<<"Ingrese salario bruto: "<<endl;
+			cin>>salariobruto;
+		  }while ((salariobruto<2000) || (salariobruto<0));
+		if(salariobruto>2*salariominimo)
+		{
+			salarioneto=fsalarioneto(salariobruto);
+		}
+		else
+		{
+			salarioneto=salariobruto-salariobruto*AFP;
+			cout<<"SALARIO NETO ES: "<<salarioneto<<endl;
+		}
+	}
+
+	getch();
+}
+
+float  fsalarioneto(float salariobruto)
+{
+	float x;
+	x=salariobruto-(salariobruto*(AFP+IVA));
+	return x;
+}
+
+
+
