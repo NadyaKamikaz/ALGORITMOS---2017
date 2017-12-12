@@ -1,0 +1,1802 @@
+// Presentacion final proyecto.cpp : Defines the entry point for the console application.
+//
+
+// Nadia.cpp : Defines the entry point for the console application.
+//
+
+
+#include "stdafx.h"
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <string>
+#include "conio.h"
+#include <ctime>
+#include <Windows.h>
+#include <limits>
+#include <iomanip>
+using namespace std;
+		
+	
+	//----------------------ESTRUCTURAS--------------------------------------//
+struct tcliente
+	{ string IDc;
+	  string nombrec;
+	  string apellidoc;
+	  string fechac; // Revisar Fecha//mayor 12
+	  string correoc;
+	  int cont[3];  //numero de intereses
+	  int estadoc;
+	};
+	tcliente registro;
+
+	 struct tcontrasenac
+	 {
+		 string IDc;
+		 string contrasenac;
+	 };
+	 tcontrasenac contrac;
+
+	 struct tcupones
+	 {
+		string IDp;
+		int interes;
+		string cupon; // Nombre del cupon
+		float precio; 
+		float descuento;
+		string establecimiento;
+		
+	 };
+	tcupones cuponeria;
+
+	struct tpropietario
+	 {
+		 string nombrep;
+		 string apellidop;
+		string IDp;
+		int NITp;
+		string establecimientop; // nombre de la empresa
+		string descripcionp;
+		string direccionp;
+		string correop;
+		int telefonop;
+		int interes;
+		int categoriap;
+		int estadop;
+		string fechasub;
+	  };	
+	tpropietario registrro;
+
+	struct tcontrasenap
+	{
+		string IDp;
+		string contrasenap;
+	};
+	tcontrasenap contrap;
+
+	struct tgerente
+	  {
+		  string IDg;
+		  string contrasenag;
+	   };
+	tgerente administrador;
+
+	struct tfactura
+	{
+	 
+	 int NITp;
+	 string IDp;
+	 string IDc;
+	 string fechap;
+	 int precio;
+	};
+	tfactura fact;
+
+	struct tcuponesc
+	{
+		string IDc;
+		string cupon;
+	};
+	tcuponesc cuponesC;
+   ////----------------------ESTRUCTURAS CHAR--------------------------------------////
+
+	struct tclientechar
+	{
+	  char IDc[10];
+	  char nombrec[30];
+	  char apellidoc[40];
+	  char fechac[10];
+	  char correoc[30];
+	  int cont[3];  //numero de intereses
+	  int estadoc;
+	};
+	
+	  struct tcontrasenachar
+	 {
+		 char IDc[10];
+		 char contrasenac[20];
+	 };
+	
+	struct tcuponeschar
+	{
+	  char IDp[10];
+	  char cupon[10];
+      float precio;
+	  float descuento;
+	  int interes;
+	  char establemiento[20];
+	 
+	};
+	
+	struct tpropietariochar
+	{
+	  char nombrep[30];
+	  char apellidop[40];
+	  int NITp;
+	  char IDp[10];
+	  char establecimientop[20];
+	  char descripcionp[40];
+	  char direccionp[20];
+	  char correop[20];
+	  int telefonop;
+	  int interes;
+	  int categoriap;
+	  int estadop;
+	  char fechasub[10];
+	};
+	struct tcontrasenapchar
+	{
+		char IDp[10];
+		char contrasenap[20];
+	};
+	struct tgerentechar
+	{
+		char IDg[10];
+		char contrasenag[20];
+	};
+	struct tfacturachar
+	{
+	 // ID de factura
+	 int NITp;
+	 char IDp[10];
+	 char IDc[10];
+	 char fechap[10];
+	 int precio;
+	};
+	struct tcuponescchar
+	{
+		char IDc[10];
+		char cupon[10];
+	};
+
+	//-----------------------------FUNCIONES-----------------------------------------//
+	bool GuardarCliente(tcliente c);
+	bool GuardarPropietario(tpropietario p);
+	bool GuardarGerente(tgerente g);
+	bool GuardarCupon(tcupones c);
+	bool GuardarUsuarioC(tcontrasenac uc);
+	bool GuardarUsuarioP(tcontrasenap up);
+	bool GuardarFactura(tfactura f);
+
+	void ActualizarPropietario(string idp);
+	void ActualizarCliente(string idc);
+	bool BuscarCupones();
+	void registro_cliente();
+	void registro_propietario();
+	void registro_gerente();
+	void FacturasEmitidas();
+	void inicio_propietario();
+	void inicio_cliente();
+	void inicio_gerente();	
+	void mostrar_perfil_cliente();//Sin Definir A// Probar M
+	//void modificar_perfil_cliente();//Sin Definir A // Probar M
+	void mostrar_interes_cliente(); 
+	//void modificar_interes_cliente(string idc); 
+	void mostrar_lugares_cliente(int i);
+	void mostrar_cupones(string id);
+	void Mostrar_cupones_CLiente();
+	void mostrar_perfil_propietario();
+	//void modificar_perfil_propietario(); 
+	void informe_pagos(); //falta hacer //Sin Definir A
+	void informe_deudas();//falta hacer 
+	void oferta_cupones();
+	char mostrar_oferta_cupones(string id);
+	void mostrar_consumidores_propietario();//Sin Definir A
+	void listar_lugares(); //nadia //Sin Definir a
+	void consultar_lugares();//nadia //Sin Definir A
+	void borrar_lugares();//nadia // sin Definir A
+	void listar_usuarios();//nadia //sin Definir A
+	void consultar_usuarios();//nadia  //Sin Definir A
+	void listar_intereses();//nadia  //Sin Definir A
+	void consultar_intereses(); //Sin Definir A
+	tcupones BuscarCuponxNom(string cupon);	
+
+	void factura();
+	//-----------------------------VALIDACIONES-------------------------------------//
+		
+	
+	bool validarnumeroentero (string a);
+	bool verifexisteidcliente(string a);// Sin definir // Probar M
+	bool verificarCorreo(string correo);// Lista M
+	bool fechanacimiento(string fecha);
+	bool ingreso_contrasenap(string id, string c);
+	bool ingreso_contrasenac(string id, string c);
+	bool ingreso_contrasenag(string id, string c);
+	bool verifexisteidpopietario(string a);//Sin Definir A // Probar M
+	bool validar_numerosNIT(int y);
+	bool verificar_telefono(int z);
+	bool verificarhoy(int dd, int mm, int aa);//Ahora la definici¾n si coincide, no es necesario mandar la fecha
+	//bool validarnombre(string a);//Sin Definir Alvaro // Probar Marce
+	//void ValidarFecha();
+	int FechaAnho();
+	int FechaMes();
+	int FechaDia();
+	//bool verificacionfecha (string x);//Sin Definir A
+		
+	//-----------------------------ARCHIVOS----------------------------------------//
+		
+	void archivo_cliente()
+		{
+			FILE *ptr;
+			ptr = fopen("cliente.dat","ab");
+			fclose(ptr);
+		}
+
+	void archivo_propietario()
+		{
+			FILE *ptr;
+			ptr = fopen("propietario.dat","ab");
+			fclose(ptr);
+		}
+		
+	
+	void archivo_gerente()
+		{
+			FILE *ptr;
+			ptr = fopen("gerente.dat","ab");
+			fclose(ptr);
+		}
+		
+	void archivo_cupone()
+		{
+			FILE *ptr;
+			ptr = fopen("cupones.dat","ab");
+			fclose(ptr);
+		}
+	void archivo_contrasenac()
+	{
+		FILE *ptr;
+		ptr = fopen("contrasenac.dat","ab");
+		fclose(ptr); 
+	}
+	void archivo_contrasenap()
+	{
+		FILE *ptr;
+		ptr = fopen("contrasenap.dat","ab");
+		fclose(ptr); 
+	}
+	 
+	void archivo_CuponesC()
+	 {
+		 FILE *ptr;
+		ptr = fopen("CuponesCliente.dat","ab");
+		fclose(ptr); 
+	 }
+
+	 void archivo_Factura()
+	{
+		FILE *ptr;
+		ptr = fopen("Factura.dat","ab");
+		fclose(ptr); 
+	}
+	 
+	bool GuardarCliente(tcliente c)
+	{
+		FILE *ptr;
+		ptr = fopen("cliente.dat","ab");
+		if(ptr != NULL)
+		{
+			tclientechar cc;
+			strcpy(cc.nombrec,c.nombrec.c_str());
+			strcpy(cc.apellidoc,c.apellidoc.c_str());
+			for(int i = 0;i<3;i++)
+			{
+				cc.cont[i] = c.cont[i];
+			}
+			strcpy(cc.correoc,c.correoc.c_str());
+			strcpy(cc.fechac,c.fechac.c_str());
+			strcpy(cc.IDc,c.IDc.c_str());
+			cc.estadoc = c.estadoc;
+
+			fwrite(&cc,sizeof(tclientechar),1,ptr);
+			fclose(ptr);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+	bool GuardarPropietario(tpropietario p)
+	{
+		FILE *ptr;
+		ptr = fopen("propietario.dat","ab");
+		if(ptr != NULL)
+		{
+			tpropietariochar pc;
+			strcpy(pc.nombrep,p.nombrep.c_str());
+			strcpy(pc.apellidop,p.apellidop.c_str());
+			pc.categoriap = p.categoriap;
+			strcpy(pc.correop,p.correop.c_str());
+			strcpy(pc.descripcionp,p.correop.c_str());
+			strcpy(pc.direccionp,p.direccionp.c_str());
+			strcpy(pc.establecimientop,p.establecimientop.c_str());
+			pc.estadop = p.estadop;
+			strcpy(pc.IDp,p.IDp.c_str());
+			pc.interes = p.interes;
+			pc.NITp = p.NITp;
+			pc.telefonop = p.telefonop;
+
+			fwrite(&pc,sizeof(tpropietariochar),1,ptr);
+			fclose(ptr);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+	bool GuardarGerente(tgerente g)
+	{
+		FILE *ptr;
+		ptr = fopen("gerente.dat","ab");
+		if(ptr != NULL)
+		{
+			tgerentechar gc;
+			strcpy(gc.IDg,g.IDg.c_str());
+			strcpy(gc.contrasenag,g.contrasenag.c_str());
+			
+			fwrite(&gc,sizeof(tgerentechar),1,ptr);
+			fclose(ptr);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+			
+	}
+	bool GuardarCupon(tcupones c)
+	{
+		FILE *ptr;
+		ptr = fopen("cupones.dat","ab");
+		if(ptr != NULL)
+		{
+			tcuponeschar cc;
+			strcpy(cc.cupon,c.cupon.c_str());
+			strcpy(cc.IDp,c.IDp.c_str());
+			strcpy(cc.establemiento,c.establecimiento.c_str());
+			cc.descuento = c.descuento;
+			cc.precio = c.precio;
+
+			fwrite(&cc,sizeof(tcuponeschar),1,ptr);
+			fclose(ptr);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+	bool GuardarUsuarioC(tcontrasenac uc)
+	{
+		FILE *ptr;
+		ptr = fopen("contrasenac.dat","ab");
+		if(ptr != NULL)
+		{
+			tcontrasenachar cc;
+			strcpy(cc.IDc,uc.IDc.c_str());
+			strcpy(cc.contrasenac,uc.contrasenac.c_str());
+			
+			fwrite(&cc,sizeof(tcontrasenachar),1,ptr);
+			fclose(ptr);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+			
+	}
+	
+	bool GuardarUsuarioP(tcontrasenap up)
+	{
+		FILE *ptr;
+		ptr = fopen("contrasenap.dat","ab");
+		if(ptr != NULL)
+		{
+			tcontrasenapchar cc;
+			strcpy(cc.IDp,up.IDp.c_str());
+			strcpy(cc.contrasenap,up.contrasenap.c_str());
+			
+			fwrite(&cc,sizeof(tcontrasenapchar),1,ptr);
+			fclose(ptr);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+			
+	}
+	bool GuardarFactura(tfactura f)	
+	{
+		FILE *ptr;
+		ptr = fopen("factura.dat","ab");
+		if(ptr != NULL)
+		{
+			tfacturachar fc;
+			strcpy(fc.fechap,f.fechap.c_str());
+			strcpy(fc.IDc,f.IDc.c_str());
+			
+			strcpy(fc.IDp,f.IDp.c_str());
+			
+			fc.NITp = f.NITp;
+			fc.precio = f.precio;
+			fwrite(&fc,sizeof(tfacturachar),1,ptr);
+			fclose(ptr);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+	bool GuardarCuponesC(tcuponesc c)
+	{
+		FILE *ptr;
+		ptr = fopen("CuponesCLiente.dat","ab");
+		if(ptr != NULL)
+		{
+			tcuponescchar cc;
+			strcpy(cc.IDc,c.IDc.c_str());
+			strcpy(cc.cupon,c.cupon.c_str());
+			
+			fwrite(&cc,sizeof(tcuponescchar),1,ptr);
+			fclose(ptr);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+			
+	}
+		//----------------------------MENU PRINCIPAL-----------------------------------//
+		
+void Logo()
+{
+	 system("cls");
+			    cout<<"\n ##############    ################   ###          ###    #########     ";
+				cout<<"\n ###                     ###          ####         ###    ###      ##   ";
+				cout<<"\n ###                     ###          #####        ###    ###       ##  ";
+				cout<<"\n ###                     ###          ### ##       ###    ###        ## ";
+				cout<<"\n ###                     ###          ###  ##      ###    ###         ##";
+				cout<<"\n ##############          ###          ###   ##     ###    ###         ##";
+				cout<<"\n ###                     ###          ###    ##    ###    ###         ##";
+				cout<<"\n ###                     ###          ###     ##   ###    ###        ## ";
+				cout<<"\n ###                     ###          ###      ##  ###    ###       ##  ";
+				cout<<"\n ###                     ###          ###       ## ###    ###      ##   ";
+				cout<<"\n ###               ################   ###        #####    #########     ";
+				cout<<"\n\n\n";
+				cout<<"\n ########      ###                   ###        ###########   ##########   ";
+				cout<<"\n ###    ##     ###                  ## ##       ###           ###          ";
+				cout<<"\n ###     ##    ###                 ##   ##      ###           ###          ";
+				cout<<"\n ###     ##    ###                ##     ##     ###           ###          ";
+				cout<<"\n ###     ##    ###               ##       ##    ###           ###          ";
+				cout<<"\n ###    ##     ###              ##         ##   ###           ##########   ";
+				cout<<"\n #######       ###             ###############  ###           ###          ";
+				cout<<"\n ###           ###             ##           ##  ###           ###          ";
+				cout<<"\n ###           ###             ##           ##  ###           ###          ";
+				cout<<"\n ###           ###             ##           ##  ###           ###          ";
+				cout<<"\n ###           #############   ##           ##  ###########   ##########   ";
+				cout<<"\n\n\n";
+}
+void main()
+		{
+			int opc1, opc2, opc3;
+			archivo_cliente();
+			archivo_contrasenac();
+			archivo_contrasenap();
+			archivo_cupone();
+			archivo_CuponesC();
+			archivo_Factura();
+			archivo_gerente();
+			archivo_propietario();
+			
+		
+		 do
+		   {
+			Logo();  
+			cout<<"\n\t\t\t        BIENVENIDO/A \n";
+			cout<<"[1]   Crear cuenta\n";
+		    cout<<"[2]   Iniciar sesion\n";
+			cout<<"[0]   Salir\n";
+			cout<<"\n Ingrese una opcion: ";
+			cin>>opc1;
+			switch(opc1)
+			{case 1:
+			  {do
+			    {
+					Logo();
+					cout<<"\n Desea crear una cuenta de cliente, propietario o gerente\n";
+				cout<<"[1]  Cliente\n";
+				cout<<"[2]  Propietario\n";
+				cout<<"[3]  Gerente Fin Place\n";
+				cout<<"[0]  Salir\n";
+				cout<<"\n Ingrese una opcion: ";
+				cin>>opc2;
+				switch(opc2)
+				    {case 1: registro_cliente(); break;
+					 case 2: registro_propietario(); break;
+					 case 3: registro_gerente(); break;
+					 case 0: cout<<"\n GRACIAS POR USAR LA APP FIND PLACE ;)";break;
+				    }
+				}while(opc2<0 || opc2>3);
+			  }break;
+			case 2:
+			  {
+				  do{
+					  Logo();
+					cout<<"\n Desea iniciar sesion como cliente, propietario o gerente: \n";
+					cout<<"[1]  Cliente\n";
+					cout<<"[2]  Propietario\n";
+					cout<<"[3]  Gerente Find Place\n";
+					cout<<"[0]  Salir\n";
+					cout<<"\n Ingrese una opcion: ";
+					cin>>opc3;
+					switch(opc3)
+					   {case 1: inicio_cliente();break;
+						case 2: inicio_propietario();break;
+						case 3:inicio_gerente(); break;
+						case 0: cout<<"\n GRACIAS POR USAR LA APP FIND PLACE ;)";break;
+					   }
+					}while(opc3<=0 || opc3>3);
+				}break;
+			case 0: cout<<"\n GRACIAS POR USAR LA APP FIND PLACE ;)"; break;
+			default: cout<<"\n ERROR"; break;
+			}
+		   }while(opc1!=0);
+		_getch();
+		}
+		
+	
+		//-------------------------------------FUNCIONES--------------------------------//
+		
+	
+	void registro_cliente()
+	{
+	 int INT=3;
+	 cout<<"\n Ingrese su fecha de nacimiento: ";
+	 fflush(stdin);
+	 getline(cin,registro.fechac);
+	    if(fechanacimiento(registro.fechac)==false)
+		   {do
+		      {
+				  cout<< "\n Introduzca su ID: ";
+		          fflush(stdin);
+				  getline(cin,registro.IDc);
+			    
+		      }while(verifexisteidpopietario(registro.IDc)==true);
+			  contrac.IDc = registro.IDc;
+		   // do
+		    // {
+				 cout<< "\n Introduzca su nombre: ";
+				 fflush(stdin);
+				 getline(cin,registro.nombrec);
+			// }while( validarnombre(registro.nombrec)==true);
+
+		    //do
+		    // {
+				 cout<<"\n Introduzca sus apellido: ";
+				fflush(stdin);
+				getline(cin,registro.apellidoc);
+		 //   }while(validarnombre(registro.apellidoc)==true);
+		    do
+		     {
+				  cout<< "\n Ingrese el Email: ";
+		          fflush(stdin);
+				  getline(cin,registro.correoc);
+		     }while(verificarCorreo(registro.correoc)==true);
+		    
+				  cout<<"\n Ingrese una contrase±a : ";
+				  fflush(stdin);
+				  getline(cin,contrac.contrasenac);
+		      
+		    for(int i=0;i<INT;i++)
+		      {
+				 do{
+					 cout<<"\n-----------INTERESES------------";
+					 cout<<"\n [1] Naturaleza/Resorts";
+					 cout<<"\n [2] Parques";
+					 cout<<"\n [3] Comida";
+					 cout<<"\n [4] Cine/Teatro";
+					 cout<<"\n [5] Fiesta/Diversion";
+					 cout<<"\n [6] Otros";
+					 cout<<"\n--------------------------------";
+					 cout<<"\n Elija un interes: ";
+					 cin>>registro.cont[i];
+				}while(registro.cont[i]<0 || registro.cont[i]>6);
+		      }
+		registro.estadoc = 0;
+		GuardarCliente(registro);
+		GuardarUsuarioC(contrac);
+	   }
+		else
+			{
+				cout<<"\n Usted debe ser mayor de 12 a±os para usar FIND PLACE";
+		    }
+	
+	}
+		
+	
+		
+	void registro_propietario()
+	{
+	  do{
+		  
+			  cout<< "\n Introduzca su ID: ";
+			  fflush(stdin);
+			  getline(cin,registrro.IDp);
+		      
+		 }while(verifexisteidpopietario(registrro.IDp)==true);
+	  contrap.IDp = registrro.IDp;
+
+	   cout<<"\n Ingrese una contrase±a : ";
+	   fflush(stdin);
+	   getline(cin,contrap.contrasenap);
+		      
+	  do{
+		    cin.clear();
+			cin.ignore(1024, '\n');
+		   cout<<"\n Introduzca el NIT de su establecimiento: ";
+			cin>>registrro.NITp;
+	  }while(cin.fail()==true);
+	
+	  cout<< "\n Introduzca el nombre de su establecimiento: ";
+	  fflush(stdin);
+	  getline(cin,registrro.establecimientop);
+	  cout<<"\n Introduzca la descipcion de su establecimiento: ";
+	  fflush(stdin);
+	  getline(cin, registrro.descripcionp);
+	  cout<<"Introduzca la direccion del establecimiento: ";
+	  fflush(stdin);
+	  getline(cin,registrro.direccionp);
+	  //do
+	  //  {
+			cout<<"\n Ingrese la fecha de su subscripcion: ";
+			fflush(stdin);
+			getline(cin,registrro.fechasub);
+		//}while(verificacionfecha(registrro.fechasub)==true);
+	  do
+		{
+			cout<< "\n Ingrese el Email: ";
+		 getline(cin, registrro.correop);
+	}while(verificarCorreo(registrro.correop)==true);
+	  do
+		{
+			cin.clear();
+			cin.ignore(1024, '\n');
+			cout<<"\n Ingrese su numero de celular: ";
+		 cin>>registrro.telefonop;
+		}while(cin.fail()==true);
+	  do
+	    {cout<<"\n-----------INTERESES------------";
+		 cout<<"\n [1] Naturaleza/Resorts";
+		 cout<<"\n [2] Parques";
+		 cout<<"\n [3] Comida";
+		 cout<<"\n [4] Cine/Teatro";
+		 cout<<"\n [5] Fiesta/Diversion";
+		 cout<<"\n [6] Otros";
+		 cout<<"\n--------------------------------";
+		 cout<<"\n Elija el interes al cual pertenece su establecimiento: ";
+		 cin>>registrro.interes;
+		 }while(registrro.interes<0 ||registrro.interes>6);
+	   
+	   do
+		 {cout<<"\n Ingrese la categoria a la que pertenece su establecimiento";
+		  cout<<"\n [1]  Microempresa";
+		  cout<<"\n [2]  Macroempresa";
+		  cout<<"\n [3]  Mediana Empresa";
+		  cout<<"\n [4]  Gobierno Municipal";
+		  cin>>registrro.categoriap;
+		 }while(registrro.categoriap<1 || registrro.categoriap>4);
+	  registrro.estadop = 0;
+	  GuardarPropietario(registrro);
+	  GuardarUsuarioP(contrap);
+	  
+	}
+		
+	
+	void registro_gerente()
+	{
+		
+	     cout<<"\n Ingrese su ID: ";
+		 fflush(stdin);
+		 getline(cin,administrador.IDg);
+		
+		cout<<"\n Ingrese su contrasena: ";
+		  fflush(stdin);
+		  getline(cin,administrador.contrasenag);
+		  GuardarGerente(administrador);
+	}
+		
+	void inicio_cliente()
+	{int opc1, opc2, opc3, opc4;
+	 
+	 cout<<"\n Ingrese su ID: ";
+	  fflush(stdin);
+	  getline(cin,contrac.IDc);
+	 cout<<"\n Ingrese su contrasena: ";
+	  fflush(stdin);
+	  getline(cin,contrac.contrasenac);
+	  if(ingreso_contrasenac(contrac.IDc, contrac.contrasenac)==false)
+		  {
+			  ActualizarCliente(contrac.IDc);
+			do{
+			  cout<<"\n [1]  Perfil";
+			  cout<<"\n [2]  Intereses";
+			  cout<<"\n [3]  Cupones";
+			  cout<<"\n [0]  Salir";
+			  cout<<"\n Ingrese una opcion";
+			  cin>>opc1;
+			 switch(opc1)
+			    {case 1:
+			        {do
+				       {cout<<"\n [1] Mostrar perfil";
+					    cout<<"\n [2] Modificar perfil";
+					    cout<<"\n [0]  Salir";
+						cout<<"\n Ingrese una opcion";
+					    
+						cin>>opc2;
+					    switch(opc2)
+					      {case 1: //mostrar_perfil_cliente(); 
+								break;
+						   case 2: //modificar_perfil_cliente(); 
+							   break;
+						   case 0: cout<<"\n Salir";break;
+						   default: cout<<"\n ERROR";
+					      }
+				       }while(opc2!=0);
+					   break;
+			        }
+				 
+				 case 2:
+					{do
+				       {cout<<"\n [1] Mostrar Intereses";
+					    cout<<"\n [2] Modificar Intereses";
+					    cout<<"\n [0] Salir";
+						cout<<"\n Ingrese una opcion";
+					   cin>>opc3;
+					   switch(opc3)
+					      {case 1: //mostrar_interes_cliente(); 
+									break;
+						  case 2:
+							  {
+							  //string idc;
+							  //cout<<"Ingrese el id del CLiente:";
+							  //fflush(stdin);
+							 // getline(cin,idc);
+								  //modificar_interes_cliente(contrac.IDc); 
+							   break;
+							  }
+						   case 0: cout<<"\n Salir";break;
+						   default: cout<<"\n ERROR";
+					      }
+				       }while(opc3!=0);
+					   break;
+			        }
+				 case 3:
+					do
+					{cout<<"\n [1] Adquirir cupones";
+					 cout<<"\n [2] Mostrar cupones";
+					 cout<<"\n [0] Salir";
+					 cin>>opc4;
+					 switch(opc4)
+					 {case 1: 
+								BuscarCupones();
+								//mostrar_cupones(contrac.IDc);
+								break;
+					  case 2: Mostrar_cupones_CLiente(); 
+						  break;
+					  case 0:cout<<"\n Salir";
+						  break;
+					 }
+				  }while(opc4<0 || opc4>2);
+				case 0: cout<<"\n Salir"; break;
+				default: cout<<"\n ERROR";
+			}
+		   }while(opc1!=0);
+		
+	    }
+		else
+		   {cout<<"\n ERROR: Los datos no coinciden";
+		   }
+	}
+		
+	
+		
+	
+	void inicio_propietario()
+	 {int opc1, opc2, opc3;
+	 
+	  cout<<"\n Ingrese su ID: ";
+	  fflush(stdin);
+	  getline(cin,contrap.IDp);
+	  cout<<"\n Ingrese su contrasena: ";
+	  fflush(stdin);
+	  getline(cin,contrap.contrasenap);
+	  if(ingreso_contrasenap(contrap.IDp, contrap.contrasenap)==false)
+		 {
+			 ActualizarPropietario(contrap.IDp);
+		  do
+		   {cout<<"\n [1] Perfil";
+		    cout<<"\n [2] Consumidor";
+		    cout<<"\n [3] Base de datos";
+			cout<<"\n [0] Salir";
+			cout<<"\n Ingrese una opcion: ";
+			cin>>opc1;
+			switch(opc1)
+			  {case 1: 
+			        {do
+					   {cout<<"\n [1] Mostrar";
+					    cout<<"\n [2] Modificar";
+						cout<<"\n [0] Salir";
+						cout<<"\n Ingrese una opcion: ";
+						cin>>opc2;
+						switch(opc2)
+						  {case 1: mostrar_perfil_propietario(); break;
+						   case 2: //modificar_perfil_propietario();
+									break;
+						   case 0: cout<<"\n Salir";
+						  }
+					   }while(opc2<0 || opc2>3);
+					}break;
+			  case 2://mostrar_consumidores_propietario();
+				  break;
+			  case 3:
+				  {do
+				    {cout<<"\n [1] Pagos y deudas";
+					 cout<<"\n [2] Crear Cupon";
+					cout<<"\n Salir";
+					cin>>opc3;
+					switch(opc3)
+					  {case 1:  //factura(); //hacer
+								break;
+					  case 2:  oferta_cupones();
+								break;
+					   case 0: cout<<"\ Salir";
+								break;
+					  }
+					}while(opc3<0 || opc3>2);
+				  }break;
+			  case 0:cout<<"\n Salir";break;
+			  default: cout<<"\ ERROR ";
+			  }
+		   }while(opc1!=0);
+		   
+		 }
+		else
+		 {cout<<"\n ERROR: Los datos no coinciden";
+		 }
+		}
+		
+	
+	void inicio_gerente()
+	  {int opc1, opc2, opc3, opc4;
+	   
+	   cout<<"\n Ingrese su ID: ";
+	   fflush(stdin);
+	   getline(cin,administrador.IDg);
+	   cout<<"\n Ingrese su contrasena: ";
+	   fflush(stdin);
+	   getline(cin,administrador.contrasenag);
+	   if(ingreso_contrasenag(administrador.IDg, administrador.contrasenag)==false)
+		  {
+		   do
+		    {cout<<"\n----------------------------";
+			cout<<"\n [1] Lugares";
+			cout<<"\n [2] Usuarios";
+			cout<<"\n [3] Intereses";
+			cout<<"\n [4] Base de datos";
+			cout<<"\n Salir";
+			cout<<"\n Seleccione una opcion";
+			cin>>opc1;
+			switch(opc1)
+			      {case 1:{do
+			                {cout<<"\n [1] Listar";
+			                 cout<<"\n [2] Consultar";
+						     cout<<"\n [3] Borrar";
+						     cout<<"\n [0] Salir";
+						     cout<<"\n Seleccione una opcion: ";
+						     cin>>opc2;
+						     switch(opc2)
+						         {case 1://listar_lugares();
+										break;
+								  case 2: //consultar_lugares();
+										break;
+								  case 3://borrar_lugares();
+									  break;
+								  case 0: cout<<"\n Salir";break;
+							     }
+							}while(opc2<0 || opc2>3);
+			              }break;
+		
+	
+				   case 2:{do
+						     {cout<<"\n [1] Listar";
+							  cout<<"\n [2] Consultar";
+							  cout<<"\n [0] Salir";
+							  cout<<"\n Seleccione una opcion: ";
+							  cin>>opc3;
+							  switch(opc3)
+							  {case 1: //listar_usuarios();
+										break;
+							   case 2: //consultar_usuarios(); 
+										break;
+							   case 3: cout<<"\n Salir";break;
+							  }
+							}while(opc3<0 || opc3>2);
+						  } break;
+				   case 3:{do
+					        {cout<<"\n [1] Listar";
+						     cout<<"\n [2] Consultar";
+						     cout<<"\n [0] Salir";
+						     cout<<"\n Seleccione una opcion: ";
+						     cin>>opc4;
+						     switch(opc4)
+						      {case 1: //listar_intereses();
+									break;
+							   case 2: //consultar_intereses(); 
+								   break;
+							   case 0: cout<<"\n Salir";break;
+						      }
+						  }while(opc4<0 || opc4>4);
+						  }break;
+				  case 4: //informe_pagos();
+					  break;
+				   case 0:cout<<"\n Salir";
+						  break;
+				   default: cout<<"\n ERROR";
+		                   break;
+			      }
+		    }while(opc2!=0);
+		
+	     }
+		else
+		   {cout<<"\n ERROR: Los datos no coinciden";
+		   }
+		}
+		
+	
+		// VALIDACION FECHAS//
+		
+	
+		
+	
+	bool fechanacimiento(string fecha)
+	 {bool K=true; 
+	  if((fecha.at(2)=='/') && (fecha.at(5)=='/'))
+		{int dd=(atoi(fecha.substr(0,2).c_str()));
+		 int mm=(atoi(fecha.substr(3,2).c_str()));
+		 int aa=(atoi(fecha.substr(6,4).c_str()));
+		 if(mm<=12 && mm>0)
+			 {if(mm==1 || mm==3 || mm==5 || mm==7 || mm==8 || mm==10 || mm==12)
+				 {if(dd>=1  || dd<=31)
+					{if(verificarhoy( dd, mm, aa)==false)
+						{K=false;
+						}
+				    } 
+				 }
+			  else
+				{if(mm==4 || mm==6|| mm==9|| mm==11)
+				   {if(dd>=1  || dd<=30)
+					  {if(verificarhoy( dd, mm, aa)==false)
+					      {K=false;
+			              }
+					   } 
+				   }
+				 else
+				   {if(aa%4==0 && (aa%100!=100) || (aa%400==0 ))
+					  {if(dd>=1 ||  dd<=29)
+						   {if(verificarhoy( dd, mm, aa)==false)
+							   {K=false;
+			                   }
+				           }
+				       }
+					 else
+					    {if(dd<=1 &&dd<=28)
+							{if(verificarhoy( dd, mm, aa)==false)
+							    {K=false;
+							    }
+				            }
+				        }
+			        }
+			     }
+			 }
+	     }	
+	   return K;
+	}
+	
+	
+	bool verificarhoy(int dd, int mm, int aa)
+	{bool z=true;  
+	   //if(fechanacimiento(fecha)==false)
+		   int dd1=FechaDia();
+		   int mm1= FechaMes();
+		   int aa1=FechaAnho();
+		      if (aa1-aa>12) 
+				{ return false;
+			    }
+			  else
+				 {if (aa1-aa==12)
+					 {if (mm1>mm)
+						 {return false;
+			             }
+					  else
+				         {if(mm1==mm)
+						     {if (dd1>=dd)
+							     {return false;
+			                      }
+			                 }
+			              }
+			           }
+			      }
+	       
+		return z;
+	}
+		
+	
+	int FechaAnho() 
+		{
+			time_t tSac = time(NULL);  // instante actual
+			struct tm* pt1 = localtime(&tSac);
+			return((pt1->tm_year+1900));
+		
+	
+		}
+		
+	int FechaMes()
+		{
+			time_t tSac = time(NULL);  // instante actual
+			struct tm* pt1 = localtime (&tSac);
+			return((pt1->tm_mon+1));
+		
+	
+		}
+		
+	
+	int FechaDia() 
+		{
+			time_t tSac = time(NULL);  // instante actual
+			struct tm* pt1 = localtime (&tSac);
+			return((pt1->tm_mday));
+		
+	
+		}
+/*		
+bool validarnombre(string a)
+{
+	int i;
+	for(i=0; i< a.length(); i++)
+	{
+		if(!(a.at(i) > 32 && a.at(i) < 64))
+		{
+			if(((a.at(i) > 96 && a.at(i) < 123) || (a.at(i) > 64 && a.at(i) < 91)))
+							return true;
+		}
+		else 
+			return false;
+	}
+
+}
+*/
+bool validarnumeroentero (string X)
+{
+	bool k = true;
+	int i=0, cont=0; 
+	for(i=0;i<X.length(); i++);
+	   {if(isdigit(X[i]))
+		  {cont++;
+	      }
+	   }
+	if(cont==X.length())
+	    k = false;
+	return k;
+}
+	
+	/*bool validarletras (string X)
+		{bool k = true;
+		int i=0, cont=0; 
+		for(i=0;i<X.length(); i++);
+		  {if(isalpha(X[i]) !=' ' || X[i] == ' ')
+			  {cont++;
+		      }
+		
+		  }
+		
+		if(cont==X.length())
+		    k = false;
+		return k;
+		}*/
+		
+	
+bool verificarCorreo(string correo)
+	{
+		int n = correo.length(), i ,arr = 0, punto = 0;
+			for(i=0; i < n; i++)
+			{
+				if(correo[i] != '@' && correo[i] != '.' && correo[i] != '_'&& correo[i] != '-')
+					if(correo[i] != -92 &&correo[i] != -91)
+						if(!((correo[i] > 96 && correo[i] < 123) || (correo[i] > 64 && correo[i] < 91)))
+							return false;
+				if(correo[i] == '@')
+					arr++;
+				if(correo[i] == '.')
+					punto++;
+			}
+			if((punto == 0 && arr == 1))
+					return true;
+			else
+				return false;
+}
+	
+void mostrar_perfil_propietario()
+{
+	//FILE *ptr;
+	//ptr= fopen("propietario.dat","rb");
+	 //if(ptr !=NULL)
+	   //{
+		cout<<"\n Bienvenido "<<registrro.establecimientop;
+	    cout<<"\n ID: "<<registrro.IDp;
+	    cout<<"\n NIT: "<<registrro.NITp;
+	    cout<<"\n Descripcion Esatablecimiento: "<<registrro.descripcionp;
+	    cout<<"\n Direccion Establecimiento: "<<registrro.direccionp;
+	    cout<<"\n Correo: "<<registrro.correop;
+	    cout<<"\n Contacto / celular: "<<registrro.telefonop;
+	    cout<<"\n Interes: "<<registrro.interes;
+	    cout<<"\n Categoria: "<<registrro.categoriap;
+	  // }
+	 //else
+		// cout<<"\n No existe el archivo";
+	}
+/*	
+	void modificar_perfil_propietario()
+	{char R;
+	 int opc;
+	 tcontrasenap contrap;
+	 cout<<"\n Desea modificar su perfil (coloque s): ";
+	 cin>>R;
+	 if(R='s')
+	  {
+		  FILE *ptr;
+		  FILE *ptr1;
+		  ptr1=fopen("contrasenap.dat","r+b");
+	   ptr=fopen("propietario.dat","r+b");
+	   if(ptr !=NULL)
+	    {if(registrro.estadop==0)
+	      {do
+	         {cout<<"\n ----------------PERFIL----------------------";
+	          cout<<"\n [1] Nombre establecimiento";
+		      cout<<"\n [2] Descripcion";
+		      cout<<"\n [3] Direccion";
+		      cout<<"\n [4] Correo";
+		      cout<<"\n [5] Contacto/celular";
+		      cout<<"\n [6] Categoria";
+		      cout<<"\n [7] Interes ";
+		      cout<<"\n [8] Contrasena ";
+		      cout<<"\n [9] NIT";
+			  cout<<"\n [0] No desea modificar";
+		      cin>>opc;
+		      switch(opc)
+		        {case 1:{cout<< "\n Introduzca el nombre de su establecimiento: ";
+		                 getline(cin,registrro.establecimientop);
+				        }break;
+			     case 2:{cout<<"\n Introduzca la descipcion de su establecimiento: ";
+		                 getline(cin, registrro.descripcionp);
+					    }break;
+			     case 3:{cout<<"Introduzca la direccion del establecimiento: ";
+	                     getline(cin,registrro.direccionp);
+					    }break;
+			     case 4:{
+					 do
+		               {
+						cout<< "\n Ingrese el Email: ";
+		                 getline(cin, registro.correoc);
+		                  }while(verificarCorreo(registro.correoc)==true);
+					    }break;
+			     case 5:{do
+		                  {cout<<"\n Ingrese su numero de celular: ";
+		                   cin>>registrro.telefonop;
+		                  }while(verificar_telefono(registrro.telefonop)==true);
+					    }break;
+			     case 6:{do
+		                  {cout<<"\n Ingrese la categoria a la que pertenece su establecimiento";
+		                   cout<<"\n [1]  Microempresa";
+		                   cout<<"\n [2]  Macroempresa";
+		                   cout<<"\n [3]  Mediana Empresa";
+		                   cout<<"\n [4]  Gobierno Municipal";
+		                   cin>>registrro.categoriap;
+		                  }while(registrro.categoriap<1 || registrro.categoriap>4);
+					    }break;
+			     case 7:{do
+	                      {cout<<"\n-----------INTERESES------------";
+		                   cout<<"\n [1] Naturaleza/Resorts";
+		                   cout<<"\n [2] Parques";
+		                   cout<<"\n [3] Comida";
+		                   cout<<"\n [4] Cine/Teatro";
+		                   cout<<"\n [5] Fiesta/Diversion";
+		                   cout<<"\n [6] Otros";
+		                   cout<<"\n--------------------------------";
+		                   cout<<"\n Elija el interes al cual pertenece su establecimiento: ";
+		                   cin>>registrro.interes;
+		                   }while(registrro.interes<0 ||registrro.interes>6);
+					    }break;
+			     case 8:{
+						cout<<"\n Ingrese una contrase±a con caracteres numericos: ";
+						  fflush(stdin);
+						  getline(cin,contrac.contrasenac);
+						 
+					    }break;
+			     case 9:{do
+		                  {cout<<"\n Ingrese el NIT de su establecimiento: ";
+			               cin>>registrro.NITp;
+		                   }while(validar_numerosNIT(registrro.NITp)==true);		     
+					    }break;
+				 case 0:{cout<<"\n Salir";
+						}break;
+		        }
+			 }while(opc!=0);
+	      }
+	    }
+	  }
+	}
+	
+*/	
+	void pagos_propietario()
+	{
+	}
+	
+	
+	void deudas_propietario()
+	{
+	}
+	
+	
+	bool verificar_telefono(int z)
+	{bool k=true;
+	 int d, cont=0;
+	 while(z>0)
+	    {d=z%10;
+	     z=z/10;
+	     cont++;
+	    }
+	 if(cont=8)
+	    {if(validar_numerosNIT(z)==false)
+	       {k=false;
+	       }
+	    }
+	 return k;
+	}
+	
+	
+	bool validar_numerosNIT(int y)
+	{bool k=true;
+	 int d, i=0, n, V[15], cont=0;
+	 n=y;
+	 while(y>0)
+	    {d=y%10;
+	     V[i]=d;
+	     y=y/10;
+	     i++;
+	    }
+	 n=cont;
+	 for(int j=0; j<n; j++)
+	    {if((V[j]==0 || V[j]==1) || (V[j]==2 || V[j]==3) || (V[j]==4 || V[j]==5) || (V[j]==6 || V[j]==7) || (V[j]==8 || V[j]==9))
+	       {cont++;
+	       }
+	    }
+	 if(cont=i)
+	   {k=false;
+	   }
+	 return k;
+	} 
+	
+	
+	void factura()
+	{cout<<"\n Ingrese la fecha de suscripcion";
+	 //cin>>fact;
+	}
+	
+	void oferta_cupones()
+	{
+	  
+	  cout<<"\n Tipo de oferta: ";
+	  cout<<"\n Ejemplo: Helado dechocolate";
+	  cout<<"\n ----->";
+	  fflush(stdin);
+	  getline(cin,cuponeria.cupon);
+	  
+	  cout<<"\n Precio: ";
+	  cout<<"\n Ejemplo: 10 bs";
+	  cout<<"\n ----->";
+	  cin.clear();
+	  cin.ignore(1024,'\n');
+	  cin>>cuponeria.precio;
+	  cout<<"\n Descripcion del descuento";
+	  cout<<"\n Ejemplo: -20.5 (-20.5% de descuento)";
+	  cout<<"\n ----->";
+	  cin>>cuponeria.descuento;
+	  cuponeria.IDp = contrap.IDp;
+	  cuponeria.establecimiento = registrro.establecimientop;
+	  GuardarCupon(cuponeria);
+	}
+	
+	
+	
+	
+	void mostrar_interes_cliente()
+	{FILE *ptr;
+	 ptr = fopen("cliente.dat","rb");
+	 if(ptr != NULL)
+	   {for(int i=0;i<3;i++)
+		   mostrar_lugares_cliente(i);
+	   }
+	 fclose(ptr);	 
+	}
+	
+	
+	void mostrar_lugares_cliente(int i)
+	{FILE *ptr;
+	 ptr = fopen("propietario.dat","rb");
+	 if(ptr != NULL)
+	    {fread(&registrro, sizeof(registrro),1,ptr);
+		 while(!feof(ptr))
+			 {if(registrro.interes==registro.cont[i])
+			    {cout<<"\n Interes: "<<registrro.interes;
+			     cout<<"\n Lugar: "<<registrro.establecimientop;
+			     cout<<"\n Descripcion: "<<registrro.descripcionp;
+				 cout<<"\n Direccion: "<<registrro.direccionp;
+				 cout<<"\n Celular: "<<registrro.telefonop;
+				 cout<<"\n Correo electronico: "<<registrro.correop;
+				 mostrar_cupones(registrro.IDp);
+		        }
+		     }
+	    }
+	fclose(ptr);
+	}
+	
+	/*
+	char mostrar_oferta_cupones(string id)
+	{//se necesita abrir archivo?
+	  char R;
+	  cout<<"---------------------------------------------\n";
+	  cout<<"\n Tipo de oferta: "<<cuponeria.cupon;
+	  cout<<"\n Precio: "<<cuponeria.precio;
+	  cout<<"\n Descripcion del descuento"<<cuponeria.descuento;
+	  cout<<"\n Desea adquirir el cupon (S/N)";
+	  cin>>R;  
+	  return R;
+	}
+	*/
+	
+	void mostrar_cupones(string idp)
+	{int cont=1;
+	 FILE *ptr;
+	 ptr = fopen("cupones.dat","rb");
+	 if(ptr != NULL)
+	    {
+			fread(&cuponeria, sizeof(cuponeria),1,ptr);
+	  		while(!feof(ptr))
+		    {
+				if(cuponeria.IDp==registrro.IDp)
+		       {
+				      cout<<"------------------"<<cont<<"---------------------------\n";
+					  cout<<"\n Tipo de oferta: "<<cuponeria.cupon;
+					  cout<<"\n Precio: "<<cuponeria.precio;
+					  cout<<"\n Descripcion del descuento"<<cuponeria.descuento;
+					cont++;
+		       }
+		    }
+	    }
+	 fclose (ptr);
+	}
+	
+	
+	/*
+	void modificar_interes_cliente(string idc)
+	{FILE *ptr;
+	 ptr = fopen("cliente.dat","rb");
+	 if(ptr!= NULL)
+	   {fread(&registro, sizeof(registro),1,ptr);
+	    while(!feof(ptr))
+		   {if(idc==registro.IDc) //Revisar si funciona
+		      {for(int i=0;i<3;i++)
+			     {do
+			        {cout<<"\n-----------INTERESES------------";
+		             cout<<"\n [1] Naturaleza/Resorts";
+		             cout<<"\n [2] Parques";
+					 cout<<"\n [3] Comida";
+					 cout<<"\n [4] Cine/Teatro";
+					 cout<<"\n [5] Fiesta/Diversion";
+					 cout<<"\n [6] Otros";
+					 cout<<"\n--------------------------------";
+					 cout<<"\n Elija un interes: ";
+					 cin>>registro.cont[i];
+				    }while(registro.cont[i]<0 || registro.cont[i]>3);
+		         }      
+		      }
+		   }
+	   }
+	fclose (ptr);
+	}
+	*/
+bool verifexisteidpopietario(string a)
+{
+	FILE *ptr;
+	tpropietariochar reg;
+	tpropietario p;
+	int i, b=0;
+	bool r =false;
+	ptr=fopen("propietario.dat","rb");
+	fread(&reg,sizeof(reg),1,ptr);
+	while(!feof(ptr))
+	{
+		p.IDp = reg.IDp;
+		if(p.IDp.compare(a) == 0 )
+		{	
+			r = true;
+		}
+		fread(&reg,sizeof(reg),1,ptr);
+	}
+	return r;
+}
+
+bool verifexisteidcliente(string a)
+{
+	FILE *ptr;
+	tclientechar reg;
+	tcliente cc;
+	int i, b=0;
+	bool r = false;
+	ptr=fopen("cliente.dat","rb");
+	fread(&reg,sizeof(reg),1,ptr);
+	while(!feof(ptr))
+	{
+		cc.IDc = reg.IDc;
+		if(cc.IDc.compare(a) == 0)
+		{
+			b = true;
+		}	
+		fread(&reg,sizeof(reg),1,ptr);
+	}
+	return b;
+}
+	
+bool ingreso_contrasenap(string id, string c)
+	{ bool k=true;
+		FILE *ptr;
+		ptr = fopen("contrasenap.dat","rb");
+		tcontrasenapchar cc;
+		if(ptr != NULL)
+		{
+			fread(&cc,sizeof(tcontrasenapchar),1,ptr);
+			while(feof(ptr) == false)
+			{
+				contrap.IDp = cc.IDp;
+				contrap.contrasenap = cc.contrasenap;
+				if(id.compare(contrap.IDp) == 0 && c.compare(contrap.contrasenap) == 0 ) 
+				{
+					k=false;
+				}
+			fread(&cc,sizeof(tcontrasenapchar),1,ptr);
+			}
+		}
+	 return k;
+	}
+
+bool ingreso_contrasenac(string id, string c)
+	{ bool k=true;
+		FILE *ptr;
+		ptr = fopen("contrasenac.dat","rb");
+		tcontrasenachar cc;
+		if(ptr != NULL)
+		{
+			fread(&cc,sizeof(tcontrasenachar),1,ptr);
+			while(feof(ptr) == false)
+			{
+				contrac.IDc = cc.IDc;
+				contrac.contrasenac = cc.contrasenac;
+				if(id.compare(contrac.IDc) == 0 && c.compare(contrac.contrasenac) == 0 ) 
+				{
+					k=false;
+				}
+			fread(&cc,sizeof(tcontrasenachar),1,ptr);
+			}
+		}
+	 return k;
+	}
+
+bool ingreso_contrasenag(string id, string c)
+	{ bool k=true;
+	FILE *ptr;
+		ptr = fopen("gerente.dat","rb");
+		tgerentechar cc;
+		if(ptr != NULL)
+		{
+			fread(&cc,sizeof(tgerentechar),1,ptr);
+			while(feof(ptr) == false)
+			{
+				administrador.IDg = cc.IDg;
+				administrador.contrasenag = cc.contrasenag;
+				if(id.compare(administrador.IDg) == 0 && c.compare(administrador.contrasenag) == 0 ) 
+				{
+					k=false;
+				}
+				fread(&cc,sizeof(tgerentechar),1,ptr);
+			}
+		}
+	 return k;
+	}
+
+void mostrar_perfil_cliente()
+{
+	FILE *ptr;
+	tclientechar reg;
+	ptr = fopen("cliente.dat","rb");
+	if(ptr!=NULL){
+		fread(&reg,sizeof(reg),1,ptr);
+		cout<<endl<<endl<<"--------------------------CLIENTES--------------------------";
+		while(!feof(ptr)){
+			cout<<endl<<reg.IDc<<"   "<<reg.nombrec<<"   "<<reg.apellidoc<<"   "<<reg.correoc<<"   ";
+		}
+			fread(&reg,sizeof(reg),1,ptr);
+		fclose(ptr);
+	}else{
+		cout<<"Archivo no existe";
+	}
+}
+/*
+void modificar_perfil_cliente()
+{
+	FILE *ptr;
+	FILE *ptr1;
+	 int INT=3;
+	 ptr1=fopen("contrasenac.dat","ab");
+	 ptr = fopen("cliente.dat","ab");
+	 cout<<"\n Ingrese su fecha de nacimiento: ";
+	 cin>>registro.fechac[10];
+	    if(fechanacimiento(registro.fechac)==false)
+		   {do
+		      {do
+		         {cout<< "\n Introduzca su ID: ";
+		          cin>>registro.IDc;
+			     }while(validarnumeroentero (registro.IDc)==true);   
+		      }while(verifexisteidpopietario(registro.IDc)==true);
+		    do
+		     {
+				 cout<< "\n Introduzca su nombre: ";
+		      cin>>registro.nombrec;
+			 }while( validarnombre(registro.nombrec)==true);
+		    do
+		     {
+				 cout<<"\n Introduzca sus apellido: ";
+		      cin>>registro.apellidoc;
+		     }while(validarnombre(registro.apellidoc)==true);
+		    do
+		     {
+				  cout<< "\n Ingrese el Email: ";
+		       getline(cin, registro.correoc);
+		     }while(verificarCorreo(registro.correoc)==true);
+		    do
+		      {cout<<"\n Ingrese una contrase±a con caracteres numericos: ";
+			  cin>>contrac.contrasenac;
+			  }while(validar_numerosNIT(contrac.contrasenac)==true);
+		    for(int i=0;i<INT;i++)
+		      {do
+			    {cout<<"\n-----------INTERESES------------";
+		         cout<<"\n [1] Naturaleza/Resorts";
+		         cout<<"\n [2] Parques";
+		         cout<<"\n [3] Comida";
+		         cout<<"\n [4] Cine/Teatro";
+		         cout<<"\n [5] Fiesta/Diversion";
+		         cout<<"\n [6] Otros";
+		         cout<<"\n--------------------------------";
+			     cout<<"\n Elija un interes: ";
+			     cin>>registro.cont[i];
+				}while(registro.cont[i]<0 || registro.cont[i]>3);
+		      }
+		registro.estadoc = 0;
+		fwrite(&registro,sizeof(registro),1,ptr);
+		fwrite(&contrac,sizeof(contrac),1,ptr1);
+	   }
+		else
+			{cout<<"\n Usted debe ser mayor de 12 a±os para usar FIND PLACE";
+		    }
+	fclose(ptr);
+}
+*/
+tcupones BuscarCuponxNom(string cupon)
+{
+	FILE *ptr;
+	tcupones ccc;
+	ptr = fopen("cupones.dat","rb");
+	if(ptr != NULL)
+	{
+		
+		tcuponeschar cc;
+		
+		fread(&cc,sizeof(cc),1,ptr);
+		while(feof(ptr) == false)
+		{
+			ccc.cupon = cc.cupon;
+			if(ccc.cupon.compare(cupon)==0)
+			{
+				ccc.descuento = cc.descuento;
+				ccc.establecimiento = cc.establemiento;
+				ccc.IDp = cc.IDp;
+				ccc.interes = cc.interes;
+				ccc.precio = cc.precio;
+			}
+			fread(&cc,sizeof(cc),1,ptr);
+		}
+		fclose(ptr);
+	}
+	return ccc;
+}
+
+
+bool BuscarCupones()
+{
+	FILE *ptr;
+	bool r = false;
+	ptr = fopen("cupones.dat","rb");
+	if(ptr != NULL)
+	{
+		char R;
+		tcuponeschar cc;
+		tcuponesc ccc;
+		fread(&cc,sizeof(cc),1,ptr);
+		while(feof(ptr) == false)
+		{
+			
+			if(registro.cont[0] == cc.interes || registro.cont[1] == cc.interes || registro.cont[2] == cc.interes)
+			{
+				 
+				  cout<<"---------------------------------------------\n";
+				  cout<<"\n Tipo de oferta: "<<cuponeria.cupon;
+				  cout<<"\n Precio: "<<cuponeria.precio;
+				  cout<<"\n Descripcion del descuento"<<cuponeria.descuento;
+				  cout<<"\n Desea adquirir el cupon (S/N)";
+				  cin>>R;  
+				  if(R == 'S' || R == 's')
+				  {
+					  ccc.cupon = cc.cupon;
+					  ccc.IDc = contrac.IDc;
+					  GuardarCuponesC(ccc);
+				  }
+			}
+			fread(&cc,sizeof(cc),1,ptr);
+		}
+		fclose(ptr);
+	}
+	return r;
+
+}
+
+void Mostrar_cupones_CLiente()
+{
+	FILE *ptr;
+	bool r = false;
+	ptr = fopen("CuponesCliente.dat","rb");
+	if(ptr != NULL)
+	{
+		tcupones cup;
+		tcuponescchar cc;
+		tcuponesc c;
+		fread(&cc,sizeof(cc),1,ptr);
+		while(feof(ptr) == false)
+		{
+			c.IDc = cc.IDc;
+			if(c.IDc.compare(registro.IDc) == 0)
+			{
+				c.cupon = cc.cupon;
+				cup =BuscarCuponxNom(c.cupon);
+				  cout<<"---------------------------------------------\n";
+				  cout<<"\nEstablecimiento: "<<cup.establecimiento;
+				  cout<<"\n Tipo de oferta: "<<cup.cupon;
+				  cout<<"\n Precio: "<<cup.precio;
+				  cout<<"\n Descripcion del descuento"<<cup.descuento;
+				 
+			}
+			fread(&cc,sizeof(cc),1,ptr);
+		}
+		fclose(ptr);
+	}
+	
+
+}
+void ActualizarCliente(string idc)
+{
+	FILE *ptr;
+	
+	ptr = fopen("cliente.dat","rb");
+	if(ptr != NULL)
+	{
+		tcliente c;
+		tclientechar cc;
+		fread(&cc,sizeof(cc),1,ptr);
+		while(feof(ptr) == false)
+		{
+			c.IDc = cc.IDc;
+			if(c.IDc.compare(idc) == 0)
+			{
+				registro.apellidoc = cc.apellidoc;
+				registro.cont[0] = cc.cont[0];
+				registro.cont[1] = cc.cont[1];
+				registro.cont[2] = cc.cont[2];
+				registro.correoc = cc.correoc;
+				registro.estadoc = cc.estadoc;
+				registro.fechac = cc.fechac;
+				registro.IDc = cc.IDc;
+				registro.nombrec = cc.nombrec;
+				
+				
+			}
+			fread(&cc,sizeof(cc),1,ptr);
+		}
+		fclose(ptr);
+	}
+	
+}
+void ActualizarPropietario(string idp)
+{
+	FILE *ptr;
+	
+	ptr = fopen("propietario.dat","ab");
+	if(ptr != NULL)
+	{
+		tpropietario c;
+		tpropietariochar cc;
+		fread(&cc,sizeof(cc),1,ptr);
+		while(feof(ptr) == false)
+		{
+			c.IDp = cc.IDp;
+			if(c.IDp.compare(idp) == 0)
+			{
+				registrro.apellidop = cc.apellidop;
+				registrro.categoriap = cc.categoriap;
+				registrro.descripcionp = cc.descripcionp;
+				registrro.direccionp = cc.direccionp;
+				registrro.correop = cc.correop;
+				registrro.estadop = cc.estadop;
+				registrro.fechasub = cc.fechasub;
+				registrro.IDp = cc.IDp;
+				registrro.nombrep = cc.nombrep;
+				registrro.establecimientop = cc.establecimientop;
+				registrro.interes = cc.interes;
+				registrro.NITp = cc.NITp;
+				registrro.telefonop = cc.telefonop;
+				 break;
+			}
+			fread(&cc,sizeof(cc),1,ptr);
+		}
+		fclose(ptr);
+	}
+	
+}
